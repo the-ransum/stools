@@ -6,13 +6,15 @@ function safe_exit {
 }
 
 if [ ! -d $HOME/scripts ]; then
-	echo "No script directory in home directory..."
+	echo "No script directory in users home..."
 	mkdir -pv $HOME/scripts
 	
 	if [ ! -d $HOME/scripts ]; then
 		echo "Failed to create directory '$HOME/scripts'"
 		safe_exit
 	fi
+	
+	echo "Created directory '$HOME/scripts'"
 fi
 
 if [ -d $HOME/scripts/stools ]; then
@@ -21,19 +23,17 @@ if [ -d $HOME/scripts/stools ]; then
 fi
 
 echo "Downloading repository..."
-wget -qN https://github.com/the-ransum/stools/archive/refs/heads/main.zip -o $HOME/scripts/stools.zip
+wget -qN https://github.com/the-ransum/stools/archive/refs/heads/main.zip -o $HOME/tmp/stools.zip
 
 echo "Unzipping repository..."
-unzip -j $HOME/script/stools.zip -d $HOME/scripts/stools
+unzip -j $HOME/tmp/stools.zip -d $HOME/scripts/stools
 
-
-if [[ ":$PATH:" != *":$HOME/script/stools/bin:"* ]]; then
-        echo "Adding $HOME/script/stools/bin to path."
-        echo 'PATH="$PATH:$HOME/script/stools/bin"' >> $HOME/.bashrc
+if [[ ":$PATH:" != *":$HOME/scripts/stools/bin:"* ]]; then
+    echo "Adding $HOME/scripts/stools/bin to path."
+    echo 'export PATH="$PATH:$HOME/scripts/stools/bin"' >> $HOME/.bashrc
 fi
 
+echo "Cleaning up..."
+rm -f $HOME/tmp/stools.zip
+
 . $HOME/.bashrc
-
-
-
-
