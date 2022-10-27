@@ -1,11 +1,10 @@
 #!/bin/bash
 
-unset force
-unset quiet
+source ./utils.sh
+unset force quiet
 
 force=0
 quiet=0
-
 while [ -n "$1" ]; do
 	case "$1" in
 		-f|--force) force=1 ;;
@@ -18,57 +17,52 @@ while [ -n "$1" ]; do
 	shift
 done
 
-function _echo {
-	if [ $quiet -eq 0 ]; then
-		echo "$@"
-	fi
-}
 
 if [ ! -d $HOME/scripts ]; then
 	mkdir -p $HOME/scripts >/dev/null
 	
 	if [ ! -d $HOME/scripts ]; then
-		_echo "Failed to create directory '$HOME/scripts'"
+		blurb "Failed to create directory '$HOME/scripts'"
 		exit 1
 	fi
 	
-	_echo "Created directory '$HOME/scripts'"
+	blurb "Created directory '$HOME/scripts'"
 fi
 
 if [ -d $HOME/scripts/stools ]; then
-	_echo -n "Clearing out the old stuff."
+	blurb -n "Clearing out the old stuff."
 	rm -rf $HOME/scripts/stools >/dev/null
-	_echo " Done."
+	blurb " Done."
 fi
 
-_echo -n "Downloading, this could take a minute."
+blurb -n "Downloading, this could take a minute."
 wget -qN https://github.com/the-ransum/stools/archive/refs/heads/main.zip -O /tmp/stools.zip
-_echo " Done."
+blurb " Done."
 
 
-_echo -n "Unzipping..."
+blurb -n "Unzipping..."
 unzip -q -j /tmp/stools.zip -d $HOME/scripts/stools
-_echo " Done."
+blurb " Done."
 
 
 require_refresh=0
 #if [[ ":$PATH:" != *"$HOME/scripts/stools/bin"* ]]; the
 if ! grep -q "\$HOME/scripts/stools/bin" $HOME/.bashrc; then
-	_echo -n "Adding $HOME/scripts/stools/bin to path."
-	_echo 'export PATH="$PATH:$HOME/scripts/stools/bin"' >> $HOME/.bashrc
-	_echo " Done."
+	blurb -n "Adding $HOME/scripts/stools/bin to path."
+	blurb 'export PATH="$PATH:$HOME/scripts/stools/bin"' >> $HOME/.bashrc
+	blurb " Done."
 	require_refresh=1
 fi
 
-_echo -n "Cleaning out the garbage."
+blurb -n "Cleaning out the garbage."
 rm -f /tmp/stools.zip >/dev/null
-_echo " Done."
+blurb " Done."
 
 
-_echo "Install Complete."
-_echo ""
+blurb "Install Complete."
+blurb ""
 if [ $require_refresh -eq 1 ]; then
-	_echo -e "\033[0;33mTo finalize the install, please refresh your terminal or use 'source ~/.bashrc' to refresh.\033[0m"
+	blurb -e "\033[0;33mTo finalize the install, please refresh your terminal or use 'source ~/.bashrc' to refresh.\033[0m"
 fi
-_echo ""
-_echo "To view the scripts use the following 'stools --list'."
+blurb ""
+blurb "To view the scripts use the following 'stools --list'."

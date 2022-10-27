@@ -1,0 +1,72 @@
+#!/bin/bash
+
+source ./utils.sh
+unset force quiet
+
+# Flag variables
+force=0
+quiet=0
+
+# Parsing flags passed to script
+while [ -n "$1" ]; do
+        case "$1" in
+                -f|--force) force=1 ;;
+                -q|--quiet) quiet=1 ;;
+                *) echo "$1 is not an option" ;;
+        esac
+        shift
+done
+
+# Set the vars for and our half assed cache file for
+# referencing last updated
+_dirpath="$(dirname "$0")"
+now=$(date +%V)
+update_script=0
+last_updated=$now
+update_file="${_dirpath}/.last_updated"
+
+# Default last_updated to now if it doesn't exist
+if [ -f "${update_file}" ]; then
+	last_updated=$(cat "$update_file")
+else
+	date +%V > "$update_file"
+fi
+
+# Enable update_scripts if --force flag is set or when last_updated
+# is 1 week behind the current date
+if [ $force -eq 1 ] || [[ $(( $now-$last_updated )) -lt 0 ]]; then
+	update_script=1
+fi
+
+# Clean exit since no updates
+if [ $update_script -eq 0 ]; then
+	exit 0
+fi
+
+blurb "Updating stools, please wait..."
+
+check_file="../.last_checked"
+now=$(date +%V)
+last_updated=$now
+
+# Default last_updated to now if it doesn't exist
+if [ -f "${check_file}" ]; then
+	last_updated=$(cat "$check_file")
+else
+	date +%V > "$check_file"
+fi
+
+# Enable update_scripts if --force flag is set or when last_updated
+# is 1 week behind the current date
+if [ $force -eq 1 ] || [[ $(( $now-$last_updated )) -lt 0 ]]; then
+        blurb "Checking for updates..."
+        
+        update_hash=$(curl -qf https://raw.githubusercontent.com/the-ransum/stools/main/hash)
+        if [ "$update_hash" -eq "$(cat ../hash)" ]; then
+		blurb "No updates available."
+		exit 0
+	fi
+        
+        blurb "Updates available, downloading..."
+        ../install --force --quiet
+fi
