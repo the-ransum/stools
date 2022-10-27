@@ -8,7 +8,6 @@ if [ "$0" == "/tmp"* ]; then
 	exit 0
 fi
 
-
 # Strip the path from .bashrc
 sed -e 's/^.*PATH="\$PATH:.*\/stools\/bin.*".*$//g' -i $HOME/.bashrc
 
@@ -16,6 +15,9 @@ sed -e 's/^.*PATH="\$PATH:.*\/stools\/bin.*".*$//g' -i $HOME/.bashrc
 if [ -d $HOME/scripts/stools ]; then
 	rm -rf $HOME/scripts/stools
 fi
+
+# Source the .bashrc file to update the path
+. $HOME/.bashrc
 
 # Remove script itself 
 rm -- "$0"
