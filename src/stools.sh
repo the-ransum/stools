@@ -37,12 +37,13 @@ if [ $quiet -eq 1 ]; then
 	flags+=("--quiet")
 fi
 
+running_dir=$( dirname "$0" )
 if [ $update -eq 1 ]; then
 	# Update the stools script
-	../update "${flags[@]}"
+	"${running_dir}/../update" "${flags[@]}"
 	exit 0
 elif [ $uninstall -eq 1 ]; then
 	# Uninstall the stools script
-	../uninstall "${flags[@]}"
+	"${running_dir}/../uninstall" "${flags[@]}"
 	exit 0
 fi
