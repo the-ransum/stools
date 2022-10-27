@@ -13,6 +13,17 @@ while [ -n "$1" ]; do
                 -q|--quiet) quiet=1 ;;
                 --update) update=1 ;;
 				--uninstall) uninstall=1 ;;
+				--list)
+					#find ../bin -type l -exec basename {} \;
+					echo "Scripts -"
+					echo "    stools - A collection of scripts for managing your system"
+					echo "    epochs - Convert epoch timestamps to human readable dates"
+					echo "    spider - A simple web spider for validating live URLs"
+					echo ""
+					echo "    and many more to come..."
+					
+					exit 0
+				;;
                 *) echo "$1 is not an option" ;;
         esac
         shift
