@@ -8,16 +8,19 @@ if [ "$0" == "/tmp"* ]; then
 	exit 0
 fi
 
+echo "Removing PATH from .bashrc profile."
 # Strip the path from .bashrc
 sed -e 's/^.*PATH="\$PATH:.*\/stools\/bin.*".*$//g' -i $HOME/.bashrc
 
 # Remove extracted repository from home directory
+echo "Nuking repository in '$HOME/scripts/stools'."
 if [ -d $HOME/scripts/stools ]; then
 	rm -rf $HOME/scripts/stools
 fi
 
-# Source the .bashrc file to update the path
-. $HOME/.bashrc
+echo "Uninstall complete."
+echo ""
+echo -e "\033[0;33mTo finalize the uninstallation, please refresh your terminal or use 'source ~/.bashrc' to refresh.\033[0m"
 
 # Remove script itself 
 rm -- "$0"
