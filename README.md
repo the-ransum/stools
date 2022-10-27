@@ -7,16 +7,33 @@ high severity audits.
 ## Requirements
 
 - Operating System: Linux, macOS, and UNIX-based.
-- wget
-- unzip
+- A shell...
 
+## Installation
 
-## Installation 
+### Installing 
 
-1. Open a shell
-2. Paste: `bash <(https://raw.githubusercontent.com/the-ransum/stools/main/install)`
+1. From the terminal you can call the install script directory.
+2. `bash <(https://raw.githubusercontent.com/the-ransum/stools/main/install)`
 3. Let the installation complete
-4. Enjoy the scripts
+4. Hack the planet.
+
+
+### Updates
+
+Stools should automatically self update every 7 days, but you can also manually 
+update if necessary.
+
+1. Use the `--update` flag when calling `stools` from the command line.
+2. Command: `stools --update`
+
+
+### Uninstalling
+
+1. Use the `--uninstall` flag when calling `stools` from the command line.
+2. Command: `stools --uninstall`
+3. Pour one out for the homie...
+
 
 ## File Structure
 
