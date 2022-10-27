@@ -68,7 +68,7 @@ _echo " Done."
 _echo "Install Complete."
 _echo ""
 if [ $require_refresh -eq 1 ]; then
-	_echo -e "\033[0;33mIMPORTANT: Please refresh your shell to use the new path or use 'source ~/.bashrc'.\033[0m"
+	_echo -e "\033[0;33mTo finalize the install, please refresh your terminal or use 'source ~/.bashrc' to refresh.\033[0m"
 fi
 _echo ""
 _echo "To view the scripts use the following 'stools --list'."
