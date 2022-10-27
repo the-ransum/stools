@@ -1,39 +1,74 @@
 #!/bin/bash
 
-function safe_exit {
-	echo "The script ran into an issue, exiting..."
-	exit 1
+unset force
+unset quiet
+
+force=0
+quiet=0
+
+while [ -n "$1" ]; do
+	case "$1" in
+		-f|--force) force=1 ;;
+		-q|--quiet) quiet=1 ;;
+		*)
+				echo "$1 is not an option, exiting..."
+				exit 1
+		;;
+	esac
+	shift
+done
+
+function _echo {
+	if [ $quiet -eq 0 ]; then
+		echo "$@"
+	fi
 }
 
 if [ ! -d $HOME/scripts ]; then
-	echo "No script directory in users home..."
-	mkdir -pv $HOME/scripts
+	mkdir -p $HOME/scripts >/dev/null
 	
 	if [ ! -d $HOME/scripts ]; then
-		echo "Failed to create directory '$HOME/scripts'"
-		safe_exit
+		_echo "Failed to create directory '$HOME/scripts'"
+		exit 1
 	fi
 	
-	echo "Created directory '$HOME/scripts'"
+	_echo "Created directory '$HOME/scripts'"
 fi
 
 if [ -d $HOME/scripts/stools ]; then
-	echo "Clearing out the old stuff..."
-	rm -rfv $HOME/scripts/stools
+	_echo -n "Clearing out the old stuff."
+	rm -rf $HOME/scripts/stools >/dev/null
+	_echo " Done."
 fi
 
-echo "Downloading repository..."
-wget -qN https://github.com/the-ransum/stools/archive/refs/heads/main.zip -o $HOME/tmp/stools.zip
+_echo -n "Downloading, this could take a minute."
+wget -qN https://github.com/the-ransum/stools/archive/refs/heads/main.zip -O /tmp/stools.zip
+_echo " Done."
 
-echo "Unzipping repository..."
-unzip -j $HOME/tmp/stools.zip -d $HOME/scripts/stools
 
-if [[ ":$PATH:" != *":$HOME/scripts/stools/bin:"* ]]; then
-    echo "Adding $HOME/scripts/stools/bin to path."
-    echo 'export PATH="$PATH:$HOME/scripts/stools/bin"' >> $HOME/.bashrc
+_echo -n "Unzipping..."
+unzip -q -j /tmp/stools.zip -d $HOME/scripts/stools
+_echo " Done."
+
+
+require_refresh=0
+#if [[ ":$PATH:" != *"$HOME/scripts/stools/bin"* ]]; the
+if ! grep -q "\$HOME/scripts/stools/bin" $HOME/.bashrc; then
+	_echo -n "Adding $HOME/scripts/stools/bin to path."
+	_echo 'export PATH="$PATH:$HOME/scripts/stools/bin"' >> $HOME/.bashrc
+	_echo " Done."
+	require_refresh=1
 fi
 
-echo "Cleaning up..."
-rm -f $HOME/tmp/stools.zip
+_echo -n "Cleaning out the garbage."
+rm -f /tmp/stools.zip >/dev/null
+_echo " Done."
 
-. $HOME/.bashrc
+
+_echo "Install Complete."
+_echo ""
+if [ $require_refresh -eq 1 ]; then
+	_echo -e "\033[0;33mIMPORTANT: Please refresh your shell to use the new path or use 'source ~/.bashrc'.\033[0m"
+fi
+_echo ""
+_echo "To view the scripts use the following 'stools --list'."
