@@ -20,6 +20,7 @@ fi
 echo "Removing PATH from .bashrc profile."
 # Strip the path from .bashrc
 sed -e 's/^.*PATH="\$PATH:.*\/stools\/bin.*".*$//g' -i $HOME/.bashrc
+sed -e 's/^.*stools --update.*//g' -i $HOME/.bashrc
 
 # Remove extracted repository from home directory
 echo "Nuking repository in '$HOME/scripts/stools'."

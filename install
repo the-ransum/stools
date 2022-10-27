@@ -59,7 +59,9 @@ require_refresh=0
 #if [[ ":$PATH:" != *"$HOME/scripts/stools/bin"* ]]; the
 if ! grep -q "\$HOME/scripts/stools/bin" $HOME/.bashrc; then
 	blurb -n "Adding $HOME/scripts/stools/bin to path."
-	blurb 'export PATH="$PATH:$HOME/scripts/stools/bin"' >> $HOME/.bashrc
+	echo 'export PATH="$PATH:$HOME/scripts/stools/bin"' >> $HOME/.bashrc
+	echo 'stools --update --quiet # weekly updates' >> $HOME/.bashrc
+	
 	blurb " Done."
 	require_refresh=1
 fi
