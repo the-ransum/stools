@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Not the cleanest way to nuke the old files, but it works.
+if [ "$0" == "/tmp"* ]; then
+	cp -f "$0" /tmp/stools
+	chmod 755 /tmp/stools
+	/tmp/stools
+	exit 0
+fi
+
+
+# Strip the path from .bashrc
+sed -e 's/^.*PATH="\$PATH:.*\/stools\/bin.*".*$//g' -i $HOME/.bashrc
+
+# Remove extracted repository from home directory
+if [ -d $HOME/scripts/stools ]; then
+	rm -rf $HOME/scripts/stools
+fi
+
+# Remove script itself 
+rm -- "$0"
