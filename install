@@ -51,7 +51,7 @@ blurb " Done."
 blurb -n "Unzipping..."
 unzip -oq /tmp/stools.zip -d $HOME/scripts/
 mv $HOME/scripts/stools-main $HOME/scripts/stools
-chmod -f +x $HOME/scripts/stools/bin/* 2>/dev/null
+chmod -f +x $HOME/scripts/stools/{install,uninstall,update} $HOME/scripts/stools/bin/* 2>/dev/null
 blurb " Done."
 
 
