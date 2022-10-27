@@ -14,7 +14,7 @@ high severity audits.
 ### Installing 
 
 1. From the terminal you can call the install script directory.
-2. `bash <(curl -skL https://raw.githubusercontent.com/the-ransum/stools/main/install)`
+2. `bash <(wget -q -O - https://raw.githubusercontent.com/the-ransum/stools/main/install 2>/dev/null)`
 3. Let the installation complete
 4. Hack the planet.
 
