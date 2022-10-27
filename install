@@ -1,0 +1,39 @@
+#!/bin/bash
+
+function safe_exit {
+	echo "The script ran into an issue, exiting..."
+	exit 1
+}
+
+if [ ! -d $HOME/scripts ]; then
+	echo "No script directory in home directory..."
+	mkdir -pv $HOME/scripts
+	
+	if [ ! -d $HOME/scripts ]; then
+		echo "Failed to create directory '$HOME/scripts'"
+		safe_exit
+	fi
+fi
+
+if [ -d $HOME/scripts/stools ]; then
+	echo "Clearing out the old stuff..."
+	rm -rfv $HOME/scripts/stools
+fi
+
+echo "Downloading repository..."
+wget -qN https://github.com/the-ransum/stools/archive/refs/heads/main.zip -o $HOME/scripts/stools.zip
+
+echo "Unzipping repository..."
+unzip -j $HOME/script/stools.zip -d $HOME/scripts/stools
+
+
+if [[ ":$PATH:" != *":$HOME/script/stools/bin:"* ]]; then
+        echo "Adding $HOME/script/stools/bin to path."
+        echo 'PATH="$PATH:$HOME/script/stools/bin"' >> $HOME/.bashrc
+fi
+
+. $HOME/.bashrc
+
+
+
+
