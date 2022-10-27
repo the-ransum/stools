@@ -49,7 +49,8 @@ blurb " Done."
 
 
 blurb -n "Unzipping..."
-unzip -q -j /tmp/stools.zip -d $HOME/scripts/stools
+unzip -q /tmp/stools.zip -d $HOME/scripts/ -f
+mv $HOME/scripts/stools-main $HOME/scripts/stools
 blurb " Done."
 
 
