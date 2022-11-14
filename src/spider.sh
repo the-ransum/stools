@@ -16,7 +16,7 @@ if [ -z "$1" ] || [[ "$@" == *"-h"* ]]; then
     help
 fi
 
-# TODO: Add the use of proxy server and port
+# TODO: Add the use of proxy server and port, ex: free proxy list - https://www.proxynova.com/proxy-server-list/
 # wget -S --spider --no-cache -O /dev/null -e use_proxy=yes \
 #	-e http_proxy=[PROXY_HOST]:[PROXY_PORT] \
 #	[TARGET_URL] ...
