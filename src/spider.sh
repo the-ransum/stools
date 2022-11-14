@@ -16,5 +16,9 @@ if [ -z "$1" ] || [[ "$@" == *"-h"* ]]; then
     help
 fi
 
+# TODO: Add the use of proxy server and port
+# wget -S --spider --no-cache -O /dev/null -e use_proxy=yes \
+#	-e http_proxy=[PROXY_HOST]:[PROXY_PORT] \
+#	[TARGET_URL] ...
 
 wget -S --spider --no-cache --no-check-certificate -O /dev/null $@
