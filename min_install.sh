@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "Starting the minimum installation."
+
 if [ ! -d $HOME/bin ]; then
 	mkdir -p $HOME/bin >/dev/null
 	
