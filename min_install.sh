@@ -61,7 +61,7 @@ if ! grep -q "\$HOME/bin" $HOME/.bashrc; then
 	echo ""
 	# Prompt the user to reload bashrc or reload session
 	echo -e "\033[0;33m------- IMPORTANT NOTICE -------\033[0m"
-	echo -e "\033[0;33mTo finalize the install, please refresh your session/terminal or type 'source ~/.bashrc' to refresh.\033[0m"
+	echo -e "\033[0;33mTo finalize the installation, please refresh your session or use the command 'source ~/.bashrc' to refresh.\033[0m"
 	echo -e "\033[0;33m--------------------------------\033[0m"
 	echo ""
 fi
