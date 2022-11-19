@@ -21,3 +21,5 @@ if [ -d ${HOME}/sbin ]; then
 fi
 
 PS1="\$ "
+
+export HISTCONTROL=ignoreboth:erasedups
